@@ -5,7 +5,7 @@
 </head>
 <body>
     <script>
-        let computerPlay = function() {
+        function computerPlay() {
             let x = Math.floor(Math.random() * 3);
 
             switch(x) {
@@ -19,7 +19,35 @@
                     return "Scissors"
                     break;
             }
-        };
+        }
+
+        function playRound(playerChoice, computerChoice) {
+            if (playerChoice == "paper") {
+                if (computerChoice == "paper") {
+                    return "It's a draw!";
+                } else if (computerChoice == "rock") {
+                    return "You win! Paper beats rock.";
+                } else if (computerChoice == "scissors") {
+                    return "You lose! Paper was beaten by scissors.";
+                }
+            } else if (playerChoice == "rock") {
+                if (computerChoice == "paper") {
+                    return "You lose! Rock was beaten by paper.";
+                } else if (computerChoice == "rock") {
+                    return "It's a draw!";
+                } else if (computerChoice == "scissors") {
+                    return "You win! Rock beats scissors.";
+                }
+            } else if (playerChoice == "scissors") {
+                if (computerChoice == "paper") {
+                    return "You win! Scissors beat paper.";
+                } else if (computerChoice == "rock") {
+                    return "You lose! Paper was beaten by rock.";
+                } else if (computerChoice == "scissors") {
+                    return "It's a draw!";
+                }
+            }
+        }
     </script>
 </body>
 </html>
