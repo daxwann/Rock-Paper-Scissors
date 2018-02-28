@@ -1,123 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rock Paper Scissors></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <script>
-        //Computer select randomly//
-        function computerPlay() {
-            let x = Math.floor(Math.random() * 3);
-
-            switch(x) {
-                case 0:
-                    return "paper";
-                    break;
-                case 1:
-                    return "rock";
-                    break;
-                case 2:
-                    return "scissors"
-                    break;
-            }
-        }
-
-        //Evaluate player choice and computer choice//
-        function playRound(playerChoice, computerChoice) {
-            if (playerChoice == "paper") {
-                if (computerChoice == "paper") {
-                    return {
-                        result: "It's a draw",
-                        score: 0 
-                    }
-                } else if (computerChoice == "rock") {
-                    return {
-                        result: "You win! Paper beats rock.",
-                        score: 1
-                    }
-                } else if (computerChoice == "scissors") {
-                    return {
-                        result: "You lose! Paper was beaten by scissors.",
-                        score: -1
-                    }
-                } 
-            } else if (playerChoice == "rock") {
-                if (computerChoice == "paper") {
-                    return {
-                        result: "You lose! Rock was beaten by paper.",
-                        score: -1
-                    }
-                } else if (computerChoice == "rock") {
-                    return {
-                        result: "It's a draw!",
-                        score: 0
-                    }
-                } else if (computerChoice == "scissors") {
-                    return {
-                        result: "You win! Rock beats scissors.",
-                        score: 1
-                    }
-                } 
-            } else if (playerChoice == "scissors") {
-                if (computerChoice == "paper") {
-                    return {
-                        result: "You win! Scissors beat paper.",
-                        score: 1
-                    }
-                } else if (computerChoice == "rock") {
-                    return {
-                        result: "You lose! Paper was beaten by rock.",
-                        score: -1
-                    }
-                } else if (computerChoice == "scissors") {
-                    return {
-                        result: "It's a draw!",
-                        score: 0
-                    }
-                }
-            }
-        }
-
-        function getInput() {
-            let inputStr = prompt("Enter \"Rock\", \"Paper\", or \"Scissors\":");
-            let lowerCaseStr = inputStr.toLowerCase();
-                
-            while (lowerCaseStr != "rock" && lowerCaseStr != "paper" && lowerCaseStr != "scissors") {
-                    inputStr = prompt("Wrong choice. Enter \"Rock\", \"Paper\", or \"Scissors\":");
-                    lowerCaseStr = inputStr.toLowerCase();
-            }
-
-            return {
-                userInput: lowerCaseStr
-            }
-        }
-
-        function game(){
-            let userWin = 0;
-            let compWin = 0;
-
-            for (let i = 1; i<6; i++) {
-                let receiveInput = getInput();
-                let userPlay = receiveInput.userInput;
-                let round = playRound(userPlay, computerPlay());
-                alert("Round " + i + ": " + round.result);
-                if (round.score == 1) {
-                    userWin++;
-                } else if (round.score == -1) {
-                    compWin++;
-                }
-            }
-
-            if (userWin > compWin) {
-                alert("You win the match!");
-            } else if (userWin < compWin) {
-                alert("You lose the match!");
-            } else {
-                alert("It's a draw!");
-            }
-        }
-
-        game();
-    </script>
+  <div id="outerWrapper" class="container-fluid bg-dark d-flex flex-column justify-content-between">
+    <header class="container page-header">
+      <h1 class="display-5 text-center text-white py-2">Rock Paper Scissors</h1>
+    </header>
+    <div id="controls" class="container d-flex flex-row justify-content-between">
+      <div>
+        <button id="btnRounds" type="button" class="btn btn-primary btn-lg">3 rounds</button>
+        <button id="btnStart" type="button" class="btn btn-success btn-lg">Start</button>
+      </div>
+      <button id="btnReset" type="button" class="btn btn-danger btn-lg">Reset</button>
+    </div><!--controls-->
+    <div id="gameDisplay" class="container">
+      <div id="round" class="row justify-content-center">
+        <div class="col text-center text-light align-self-center">
+          <h5 class="font-weight-bold">Round</h5>
+          <h3 id="roundNum">0</h3>
+        </div>
+      </div><!--round-->
+      <div id="battleGround" class="row justify-content-center my-2">
+        <div id="playerSide" class="col col-md-4 col-lg-3 bg-secondary border-right border-light d-flex flex-column">
+          <div class="text-center text-light">
+            <h5 class="font-weight-bold">Player</h5>
+            <h3 id="playerScore">0</h3>
+          </div>
+        </div><!--playerSide-->
+        <div id="compSide" class="col col-md-4  col-lg-3 bg-secondary d-flex flex-column">
+          <div class="text-center text-light">
+            <h5 class="font-weight-bold">Computer</h5>
+            <h3 id="compScore">0</h3>
+          </div>
+        </div><!--compSide-->
+      </div><!--battleGround-->
+    </div><!--gameDisplay-->
+    <div id="choiceSet" class="container d-flex flex-row justify-content-center mt-3">
+      <div class="bg-danger choices d-flex flex-row justify-content-center">
+        <img class="align-self-center" src="rock.png" alt="rock">
+      </div>
+      <div class="bg-warning choices d-flex flex-row justify-content-center">
+        <img class="align-self-center" src="paper.png" alt="paper">
+      </div>
+      <div class="bg-info choices d-flex flex-row justify-content-center">
+        <img class="align-self-center" src="scissors.png" alt="scissors">
+      </div>
+    </div><!--choiceSet-->
+    <footer class="container">
+      <p class="text-light text-center">&copy; Xiaoda Wang 2018 | Los Angeles, CA</p>
+    </footer>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="#"></script>
 </body>
 </html>
