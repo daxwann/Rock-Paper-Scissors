@@ -8,19 +8,34 @@ header h1 {
 }
 
 #gameDisplay {
-  height: 40%;
+  height: 25%;
 }
 
-#round h5 {
+#gameDisplay h5 {
   text-decoration: underline;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12pt;
 }
 
 #battleGround {
   height: 70%;
 }
 
-#battleGround h5 {
-  text-decoration: underline;
+#battleGround img {
+  height: 50%;
+  width: auto;
+}
+
+#compSide img {
+  transform: rotateY(180deg);
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-20deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(20deg); }
+    100% { transform: rotate(0deg); }
 }
 
 .choices {
@@ -35,6 +50,16 @@ header h1 {
   display: inline-block;
 }
 
+.shake {
+  animation-name: shake;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
 footer p {
   font-size: 8pt;
+}
+
+button:focus, button:active {
+  outline: none !important;
 }

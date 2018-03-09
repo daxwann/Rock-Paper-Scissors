@@ -11,54 +11,65 @@
 <body>
   <div id="outerWrapper" class="container-fluid bg-dark d-flex flex-column justify-content-between">
     <header class="container page-header">
-      <h1 class="display-5 text-center text-white py-2">Rock Paper Scissors</h1>
+      <h1 class="display-6 text-center text-white py-1">Rock Paper Scissors</h1>
     </header>
-    <div id="controls" class="container d-flex flex-row justify-content-between">
+    <form id="controls" class="container d-flex flex-row justify-content-between justify-content-md-around">
       <div>
-        <button id="btnRounds" type="button" class="btn btn-primary btn-lg">3 rounds</button>
-        <button id="btnStart" type="button" class="btn btn-success btn-lg">Start</button>
+        <select id="selectRounds" name="round" class="btn btn-sm">
+          <option value="3" class="bg-white text-dark">3 rounds</option>
+          <option value="5" class="bg-white text-dark">5 rounds</option>
+          <option value="7" class="bg-white text-dark">7 rounds</option>
+        </select>
+        <button id="btnStart" type="button" class="btn btn-success btn-sm">Start</button>
       </div>
-      <button id="btnReset" type="button" class="btn btn-danger btn-lg">Reset</button>
-    </div><!--controls-->
+      <button id="btnReset" type="button" class="btn btn-danger btn-sm">Reset</button>
+    </form>
+    <div id="announcer" class="row justify-content-center">
+      <p id="announcement" class="text-info">Are you ready? Press Start</p>
+    </div>
     <div id="gameDisplay" class="container">
       <div id="round" class="row justify-content-center">
         <div class="col text-center text-light align-self-center">
           <h5 class="font-weight-bold">Round</h5>
-          <h3 id="roundNum">0</h3>
+          <h4 id="roundNum">0</h4>
         </div>
       </div><!--round-->
       <div id="battleGround" class="row justify-content-center my-2">
         <div id="playerSide" class="col col-md-4 col-lg-3 bg-secondary border-right border-light d-flex flex-column">
           <div class="text-center text-light">
-            <h5 class="font-weight-bold">Player</h5>
-            <h3 id="playerScore">0</h3>
+            <h5 class="font-weight-bold">Player: <span id="playerScore">0</span></h5>
           </div>
+          <img id="playerRock" class="align-self-center d-none" src="rock.png" alt="rock">
+          <img id="playerPaper" class="align-self-center d-none" src="paper.png" alt="paper">
+          <img id="playerScissors" class="align-self-center d-none" src="scissors.png" alt="scissors">
         </div><!--playerSide-->
-        <div id="compSide" class="col col-md-4  col-lg-3 bg-secondary d-flex flex-column">
+        <div id="compSide" class="col col-md-4  col-lg-3 bg-secondary d-flex flex-column d-flex flex-column">
           <div class="text-center text-light">
-            <h5 class="font-weight-bold">Computer</h5>
-            <h3 id="compScore">0</h3>
+            <h5 class="font-weight-bold">Computer: <span id="compScore">0</span></h5>
           </div>
+          <img id="compRock" class="align-self-center d-none" src="rock.png" alt="rock">
+          <img id="compPaper" class="align-self-center d-none" src="paper.png" alt="paper">
+          <img id="compScissors" class="align-self-center d-none" src="scissors.png" alt="scissors">
         </div><!--compSide-->
       </div><!--battleGround-->
     </div><!--gameDisplay-->
     <div id="choiceSet" class="container d-flex flex-row justify-content-center mt-3">
-      <div class="bg-danger choices d-flex flex-row justify-content-center">
+      <button type="button" value="rock" class="bg-danger choices d-flex flex-row justify-content-center" disabled>
         <img class="align-self-center" src="rock.png" alt="rock">
-      </div>
-      <div class="bg-warning choices d-flex flex-row justify-content-center">
+      </button>
+      <button type="button" value="paper" class="bg-warning choices d-flex flex-row justify-content-center" disabled>
         <img class="align-self-center" src="paper.png" alt="paper">
-      </div>
-      <div class="bg-info choices d-flex flex-row justify-content-center">
+      </button>
+      <button type="button" value="scissors" class="bg-info choices d-flex flex-row justify-content-center" disabled>
         <img class="align-self-center" src="scissors.png" alt="scissors">
-      </div>
+      </button>
     </div><!--choiceSet-->
     <footer class="container">
       <p class="text-light text-center">&copy; Xiaoda Wang 2018 | Los Angeles, CA</p>
     </footer>
   </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="#"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+  <script src="test.js"></script>
 </body>
 </html>

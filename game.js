@@ -1,3 +1,19 @@
+
+
+  var $btnStart = $('#btnStart');
+  var $btnReset = $('#btnReset');
+
+  $btnStart.click(function() {
+    startGame();
+  };
+
+  $btnReset.click(function() {
+    resetGame();
+  };
+
+
+
+
 //Computer select randomly
 function computerPlay() {
     let x = Math.floor(Math.random() * 3);
@@ -16,100 +32,154 @@ function computerPlay() {
 }
 
 //Evaluate player choice and computer choice
-function playRound(playerChoice, computerChoice) {
+function evalChoices(playerChoice, computerChoice) {
     if (playerChoice == "paper") {
         if (computerChoice == "paper") {
             return {
                 result: "It's a draw",
                 score: 0
-            }
+            };
         } else if (computerChoice == "rock") {
             return {
-                result: "You win! Paper beats rock.",
+                result: "Your paper beats rock.",
                 score: 1
-            }
+            };
         } else if (computerChoice == "scissors") {
             return {
-                result: "You lose! Paper was beaten by scissors.",
+                result: "Your paper was beaten by scissors.",
                 score: -1
-            }
-        }
+            };
+        };
     } else if (playerChoice == "rock") {
         if (computerChoice == "paper") {
             return {
-                result: "You lose! Rock was beaten by paper.",
+                result: "Your rock was beaten by paper.",
                 score: -1
-            }
+            };
         } else if (computerChoice == "rock") {
             return {
                 result: "It's a draw!",
                 score: 0
-            }
+            };
         } else if (computerChoice == "scissors") {
             return {
-                result: "You win! Rock beats scissors.",
+                result: "Your rock beats scissors.",
                 score: 1
-            }
-        }
+            };
+        };
     } else if (playerChoice == "scissors") {
         if (computerChoice == "paper") {
             return {
-                result: "You win! Scissors beat paper.",
+                result: "Your scissors beat paper.",
                 score: 1
-            }
+            };
         } else if (computerChoice == "rock") {
             return {
-                result: "You lose! Paper was beaten by rock.",
+                result: "Your paper was beaten by rock.",
                 score: -1
-            }
+            };
         } else if (computerChoice == "scissors") {
             return {
                 result: "It's a draw!",
                 score: 0
-            }
-        }
-    }
-}
+            };
+        };
+    };
+};
 
 //get and validate choice from user
-function getInput() {
-    let inputStr = prompt("Enter \"Rock\", \"Paper\", or \"Scissors\":");
-    let lowerCaseStr = inputStr.toLowerCase();
-
-    while (lowerCaseStr != "rock" && lowerCaseStr != "paper" && lowerCaseStr != "scissors") {
-            inputStr = prompt("Wrong choice. Enter \"Rock\", \"Paper\", or \"Scissors\":");
-            lowerCaseStr = inputStr.toLowerCase();
-    }
+function getInput($choice) {
+    var inputStr = $choice.attr('value');
 
     return {
-        userInput: lowerCaseStr
-    }
+        userInput: inputStr
+    };
+};
+
+//reset game
+function resetGame() {
+  var $battleGroundImg = $('#battleGround img');
+  var $selectRoundsDisabled = $('#selectRounds');
+  var $btnStartDisabled = $('#btnStart');
+  var $announcement = $('#announcement');
+  $battleGroundImg.find('.d-block').addClass('d-none').removeClass('d-block');
+  $announcement.text('Are you ready? Press Start.');
+  $selectRoundsDisabled.attr('disabled', false);
+  $btnStartDisabled.attr('disabled', false);
 }
 
-//run game of 5 rounds and display final match result
-function game(){
-    let userWin = 0;
-    let compWin = 0;
+function playRound($this, roundNum, userWin, compWin) {
 
-    for (let i = 1; i<6; i++) {
-        let receiveInput = getInput();
-        let userPlay = receiveInput.userInput;
-        let round = playRound(userPlay, computerPlay());
-        alert("Round " + i + ": " + round.result);
-        if (round.score == 1) {
-            userWin++;
-        } else if (round.score == -1) {
-            compWin++;
-        }
-    }
+  //user input
+  var receiveInput = getInput($this);
+  var userPlay = receiveInput.userInput;
+  //compare user and computer choices
+  var referee = evalChoices(userPlay, computerPlay());
+  //get and display round result
+  var roundResult = referee.result;
+  $announcement.text(roundResult);
+  //tally score
+  if (referee.score == 1) {
+    $playerScore.text(userWin++);
+  } else if (referee.score == -1) {
+    $compScore.text(compWin++);
+  }
+  //set for next round
+  roundNum++;
+  $roundDisplay.text(roundNum);
 
+  return {
+    roundLast: roundNum,
+    userWin: userWin,
+    compWin: compWin
+  }
+};
+
+//run game of selected rounds and display final match result
+function startGame() {
+    var userWin = 0;
+    var compWin = 0;
+    var roundNum = 1;
+    var roundTotal = $('#roundsGroup').val();
+    var $roundDisplay = $('#roundNum');
+    var $announcement = $('#announcement');
+    var $selectRounds = $('#selectRounds');
+    var $btnChoice = $('#choiceSet button');
+    var $btnChoiceImg = $('#choiceSet img');
+    var $playerScore = $('#playerScore');
+    var $compScore = $('#compScore');
+    var $btnStart = $('#btnStart');
+
+
+    $announcement.text('Let\'s go! Pick your move below.');
+
+//disable select rounds menu and start button
+    $btnStart.attr('disabled', true);
+    $selectRounds.attr('disabled', true);
+
+    $btnChoice.addClass('shake');
+    $roundDisplay.text(roundNum);
+
+//iterate rounds through click event
+    $btnChoice.click(function() {
+      playRound($this, roundNum, roundTotal);
+      roundNum = playRound.lastRound;
+      userWin = playRound.userWin;
+      compWin = playRound.compWin;
+    });
+
+//when rounds are done
+  if (roundNum > roundTotal) {
+    $btnChoice.find('.shake').removeClass('shake');
+    $btnChoice.attr('disable', true);
+    $btnStart.attr('disabled', false);
+    $selectRounds.attr('disabled', false);
     if (userWin > compWin) {
-        alert("You win the match!");
+      $announcement.text('You win the match! Press start to try again!');
     } else if (userWin < compWin) {
-        alert("You lose the match!");
+      $announcement.text('You lose the match! Press start to try again!');
     } else {
-        alert("It's a draw!");
-    }
-}
-
-game();
+      $announcement.text('It\'s a draw!');
+    };
+  };
+};
